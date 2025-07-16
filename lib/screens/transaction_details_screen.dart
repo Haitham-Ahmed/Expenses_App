@@ -6,7 +6,7 @@ import 'edit_transaction_screen.dart';
 import 'home_screen.dart';
 
 class TransactionDetailsScreen extends StatelessWidget {
-  final String docId; // هنا بدل ما نبعت data كله، نبعت بس docId
+  final String docId; 
 
   const TransactionDetailsScreen({super.key, required this.docId});
 
@@ -36,11 +36,9 @@ class TransactionDetailsScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-
           if (!snapshot.hasData || !snapshot.data!.exists) {
             return const Center(child: Text('العملية غير موجودة'));
           }
-
           final data = snapshot.data!.data() as Map<String, dynamic>;
           final isIncome = data['type'] == 'دخل';
           final amount = data['amount'];

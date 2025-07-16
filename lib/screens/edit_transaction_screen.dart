@@ -14,7 +14,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
   late TextEditingController amountController;
   late TextEditingController noteController;
   late TextEditingController otherCategoryController;
-  String type = 'دخل'; // القيمة الافتراضية
+  String type = 'دخل'; 
   String category = '';
   DateTime? selectedDate;
 
@@ -42,7 +42,6 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
 
     category = widget.data['category'] ?? '';
     if (!categories.contains(category)) {
-      // لو التصنيف مش موجود ضمن القائمة نخليه "أخرى" ونحط النص في الحقل
       category = 'أخرى';
       otherCategoryController.text = widget.data['category'];
     }
@@ -110,8 +109,6 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                 }
               },
             ),
-
-            // يظهر حقل إضافي لو التصنيف "أخرى"
             if (category == 'أخرى') ...[
               const SizedBox(height: 16),
               TextFormField(
@@ -122,7 +119,6 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                 ),
               ),
             ],
-
             const SizedBox(height: 16),
             TextFormField(
               controller: noteController,
@@ -151,8 +147,6 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
               },
             ),
             const SizedBox(height: 16),
-
-            // 📅 حقل اختيار التاريخ
             ListTile(
               contentPadding: EdgeInsets.zero,
               title: const Text('التاريخ'),
@@ -191,12 +185,9 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                         );
                         return;
                       }
-
-                      // نحدد التصنيف النهائي
                       String finalCategory = category == 'أخرى'
                           ? otherCategoryController.text.trim()
                           : category;
-
                       if (finalCategory.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
@@ -204,11 +195,9 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                         );
                         return;
                       }
-
                       setState(() {
                         _isLoading = true;
                       });
-
                       try {
                         await TransactionService().updateTransaction(
                           docId,
@@ -222,7 +211,6 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                             'date': selectedDate!.toIso8601String(),
                           },
                         );
-
                         if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(

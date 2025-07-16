@@ -12,7 +12,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool _obscurePassword = true;
-  bool _isLoading = false; // لإظهار دائرة التحميل
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         title: const Text('تسجيل الدخول'),
         centerTitle: true,
-        // actions: [
-        //   IconButton(
-        //     icon: const Icon(Icons.language),
-        //     onPressed: () {
-        //       // لاحقًا نضيف تبديل اللغة
-        //     },
-        //   ),
-        // ],
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),

@@ -21,8 +21,6 @@ class ReportsScreen extends StatelessWidget {
           builder: (context, snapshot) {
             double totalIncome = 0;
             double totalExpense = 0;
-
-            // نجمع الدخل والمصروف لكل شهر
             Map<String, double> monthlyIncome = {};
             Map<String, double> monthlyExpense = {};
 
@@ -46,21 +44,16 @@ class ReportsScreen extends StatelessWidget {
                 }
               }
             }
-
-            // نحصل على آخر 6 شهور مرتبة
             List<String> last6Months = List.generate(6, (index) {
               DateTime date = DateTime.now().subtract(Duration(days: 30 * (5 - index)));
               return DateFormat('yyyy-MM').format(date);
             });
-
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             }
-
             if (totalIncome == 0 && totalExpense == 0) {
               return const Center(child: Text('لا توجد بيانات بعد لرسم التقرير'));
             }
-
             return Column(
               children: [
                 // Pie Chart
@@ -99,8 +92,6 @@ class ReportsScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 24),
-
-                // المؤشرات
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -109,8 +100,6 @@ class ReportsScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 24),
-
-                // Bar Chart
                 SizedBox(
                   height: 200,
                   child: BarChart(
@@ -121,7 +110,7 @@ class ReportsScreen extends StatelessWidget {
                         final income = monthlyIncome[month] ?? 0;
                         final expense = monthlyExpense[month] ?? 0;
                         return BarChartGroupData(
-                          x: int.parse(month.split('-')[1]), // الشهر كرقم
+                          x: int.parse(month.split('-')[1]), 
                           barRods: [
                             BarChartRodData(
                               toY: income,

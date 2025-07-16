@@ -25,12 +25,10 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // الرصيد الكلي المحسوب من العمليات
             StreamBuilder<QuerySnapshot>(
               stream: TransactionService().getTransactions(),
               builder: (context, snapshot) {
                 double totalBalance = 0.0;
-
                 if (snapshot.hasData) {
                   final transactions = snapshot.data!.docs;
                   for (var doc in transactions) {
@@ -44,7 +42,6 @@ class HomeScreen extends StatelessWidget {
                     }
                   }
                 }
-
                 return Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -82,8 +79,6 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             const SizedBox(height: 24),
-
-            // عنوان أحدث العمليات
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
@@ -97,8 +92,6 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-
-            // عرض العمليات من Firestore
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
                 stream: TransactionService().getTransactions(),
@@ -117,35 +110,38 @@ class HomeScreen extends StatelessWidget {
                   }
 
                   return ListView(
-                    children: transactions.map((doc) {
-                      final data = doc.data() as Map<String, dynamic>;
-                      final type = data['type'];
-                      final amount = data['amount'];
-                      final category = data['category'];
+                    children:
+                        transactions.map((doc) {
+                          final data = doc.data() as Map<String, dynamic>;
+                          final type = data['type'];
+                          final amount = data['amount'];
+                          final category = data['category'];
 
-                      final isIncome = type == 'دخل';
-                      final icon = isIncome ? Icons.arrow_downward : Icons.arrow_upward;
-                      final color = isIncome ? Colors.green : Colors.red;
+                          final isIncome = type == 'دخل';
+                          final icon =
+                              isIncome
+                                  ? Icons.arrow_downward
+                                  : Icons.arrow_upward;
+                          final color = isIncome ? Colors.green : Colors.red;
 
-                      return _buildTransactionItem(
-  category,
-  '${isIncome ? '+' : '-'}${amount} ج.م',
-  icon,
-  color,
-  onTap: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-  builder: (_) => TransactionDetailsScreen(
-    docId: doc.id, // نرسل فقط docId
-  ),
-),
-
-    );
-  },
-);
-
-                    }).toList(),
+                          return _buildTransactionItem(
+                            category,
+                            '${isIncome ? '+' : '-'}${amount} ج.م',
+                            icon,
+                            color,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (_) => TransactionDetailsScreen(
+                                        docId: doc.id,
+                                      ),
+                                ),
+                              );
+                            },
+                          );
+                        }).toList(),
                   );
                 },
               ),
@@ -161,10 +157,9 @@ class HomeScreen extends StatelessWidget {
         child: const Icon(Icons.add),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0, // لاحقًا نغيره بناءً على التنقل
+        currentIndex: 0,
         onTap: (index) {
           if (index == 0) {
-            // بالفعل في الصفحة الرئيسية
           } else if (index == 1) {
             Navigator.pushNamed(context, '/reports');
           } else if (index == 2) {

@@ -96,8 +96,6 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 16),
-
-            // التصنيف
             DropdownButtonFormField<String>(
               value: selectedCategory,
               decoration: const InputDecoration(
@@ -117,8 +115,6 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                 });
               },
             ),
-
-            // يظهر حقل الكتابة لو المستخدم اختار "أخرى"
             if (selectedCategory == 'أخرى') ...[
               const SizedBox(height: 16),
               TextFormField(
@@ -129,10 +125,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                 ),
               ),
             ],
-
             const SizedBox(height: 16),
-
-            // التاريخ
             TextFormField(
               readOnly: true,
               controller: dateController,
@@ -158,8 +151,6 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               },
             ),
             const SizedBox(height: 16),
-
-            // ملاحظات
             TextFormField(
               controller: noteController,
               decoration: const InputDecoration(
@@ -169,7 +160,6 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               ),
             ),
             const SizedBox(height: 24),
-
             _isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : ElevatedButton(
@@ -180,23 +170,18 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                         );
                         return;
                       }
-
-                      // تحديد التصنيف النهائي
                       String finalCategory = selectedCategory == 'أخرى'
                           ? otherCategoryController.text.trim()
                           : selectedCategory!;
-
                       if (finalCategory.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('من فضلك أدخل اسم التصنيف')),
                         );
                         return;
                       }
-
                       setState(() {
                         _isLoading = true;
                       });
-
                       try {
                         await TransactionService().addTransaction(
                           amount: double.parse(amountController.text.trim()),
@@ -205,9 +190,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                           date: _selectedDate,
                           note: noteController.text.trim(),
                         );
-
                         Navigator.pop(context);
-
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('تمت إضافة العملية بنجاح')),
                         );

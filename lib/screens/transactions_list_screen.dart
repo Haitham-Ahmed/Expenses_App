@@ -32,7 +32,6 @@ class TransactionsListScreen extends StatelessWidget {
               final doc = docs[index];
               final data = doc.data() as Map<String, dynamic>;
 
-              // ✨ أضف docId
               data['docId'] = doc.id;
 
               return ListTile(
@@ -43,9 +42,10 @@ class TransactionsListScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-  builder: (context) => TransactionDetailsScreen(docId: data['docId']),
-),
-
+                      builder:
+                          (context) =>
+                              TransactionDetailsScreen(docId: data['docId']),
+                    ),
                   );
                 },
               );

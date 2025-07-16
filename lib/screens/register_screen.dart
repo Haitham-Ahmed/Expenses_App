@@ -22,14 +22,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       appBar: AppBar(
         title: const Text('تسجيل حساب جديد'),
         centerTitle: true,
-        // actions: [
-        //   IconButton(
-        //     icon: const Icon(Icons.language),
-        //     onPressed: () {
-        //       // لاحقًا لإضافة تغيير اللغة
-        //     },
-        //   ),
-        // ],
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),

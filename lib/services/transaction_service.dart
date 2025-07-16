@@ -6,7 +6,6 @@ class TransactionService {
 
   String? get userId => FirebaseAuth.instance.currentUser?.uid;
 
-  // إضافة عملية جديدة
   Future<void> addTransaction({
     required double amount,
     required String type,
@@ -29,7 +28,6 @@ class TransactionService {
     });
   }
 
-  // جلب كل العمليات
   Stream<QuerySnapshot> getTransactions() {
     if (userId == null) {
       return const Stream.empty();
@@ -42,7 +40,6 @@ class TransactionService {
         .snapshots();
   }
 
-  // حذف عملية
   Future<void> deleteTransaction(String transactionId) async {
     if (userId == null) return;
     await _db
@@ -53,17 +50,18 @@ class TransactionService {
         .delete();
   }
 
-  Future<void> updateTransaction(String docId, Map<String, dynamic> data) async {
-  if (userId == null) return;
-  await _db
-      .collection('users')
-      .doc(userId)
-      .collection('transactions')
-      .doc(docId)
-      .update(data);
-}
-
-
+  Future<void> updateTransaction(
+    String docId,
+    Map<String, dynamic> data,
+  ) async {
+    if (userId == null) return;
+    await _db
+        .collection('users')
+        .doc(userId)
+        .collection('transactions')
+        .doc(docId)
+        .update(data);
+  }
 }
 
 
